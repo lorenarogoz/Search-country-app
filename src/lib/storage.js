@@ -1,6 +1,8 @@
 const KEY = 'country_search_history';
 const MAX = 10;
 
+const CACHE_KEY = 'country_cache_by_name';
+
 export function getHistory() {
   try {
     const raw = localStorage.getItem(KEY);
@@ -28,4 +30,31 @@ export function addToHistory(countryName) {
 
   localStorage.setItem(KEY, JSON.stringify(history));
   return history;
+}
+
+
+export function getCachedCountry(name) {
+  try {
+    const raw = localStorage.getItem(CACHE_KEY);
+    const cache = raw ? JSON.parse(raw) : {};
+
+    const key = name.toLowerCase();
+    return cache[key] || null;
+  } catch {
+    return null;
+  }
+}
+
+export function setCachedCountry(name, country) {
+  try {
+    const raw = localStorage.getItem(CACHE_KEY);
+    const cache = raw ? JSON.parse(raw) : {};
+
+    const key = name.toLowerCase();
+    cache[key] = country;
+
+    localStorage.setItem(CACHE_KEY, JSON.stringify(cache));
+  } catch {
+    
+  }
 }
