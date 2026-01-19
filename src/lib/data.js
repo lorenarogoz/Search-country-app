@@ -1,8 +1,14 @@
+import { getCachedCountry, setCachedCountry } from "./storage.js";
 
 export async function fetchCountryByName(name) {
   const query = (name || '').trim();
   if (!query) {
     throw new Error('Please enter a country name.');
+  }
+
+  const cached =  getCachedCountry(query);
+  if (cached){
+    return cached;
   }
 
   const url = `https://restcountries.com/v3.1/name/${encodeURIComponent(query)}`;
@@ -48,6 +54,8 @@ export async function fetchCountryByName(name) {
     if (!match) {
       throw new Error(`No country starting with "${name}".`);
     }
+
+    setCachedCountry(query, match);
 
     return match;
   } catch (err) {
