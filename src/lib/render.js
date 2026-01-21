@@ -8,7 +8,7 @@ export function renderError(container, message) {
 }
 
 export function renderCountry(container, country) {
-  container.innerHTML = '';
+  
   const card = document.createElement('div');
   card.className = 'country-card';
   const img = document.createElement('img');
@@ -26,6 +26,8 @@ export function renderCountry(container, country) {
   container.appendChild(card);
 }
 
+
+
 export function renderHistory(container, items, onClick) {
   container.innerHTML = '';
   if (!items.length) return;
@@ -39,24 +41,4 @@ export function renderHistory(container, items, onClick) {
     list.appendChild(chip);
   });
   container.appendChild(list);
-}
-
-export function renderResults(container, countries, activeIndex, onClick) {
-  container.innerHTML = '';
-  if (!countries.length) return;
-  const wrap = document.createElement('div');
-  wrap.className = 'result-list';
-  wrap.setAttribute('role', 'listbox');
-  countries.forEach((c, i) => {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'result-item' + (i === activeIndex ? ' active' : '');
-    btn.setAttribute('role', 'option');
-    btn.setAttribute('aria-selected', i === activeIndex ? 'true' : 'false');
-    btn.dataset.index = String(i);
-    btn.textContent = c.name?.common || 'Unknown';
-    btn.addEventListener('click', () => onClick(i));
-    wrap.appendChild(btn);
-  });
-  container.appendChild(wrap);
 }
