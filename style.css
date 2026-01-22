@@ -1,83 +1,154 @@
-
-header {
-  display: flex;
-  justify-content: center;
-  margin-top: 2rem;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-header h1 {
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
   margin: 0;
-  font-size: 2.2rem;
+  line-height: 1.5;
+  color: #111827;
+  background: #ffffff;
 }
 
-.controls {
-  position: relative;
+.container, .site-header,
+.site-main,
+.site-footer {
+  width: min(100% - 2rem, 720px);
+  margin-inline: auto;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.page-grid {
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.site-header {
   display: flex;
   justify-content: center;
-  align-items: center;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+  justify-content: center;
+}
+.site-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  letter-spacing: -0.015em;
+}
+
+.site-main {
+  display: grid;
+  gap: 1.5rem;
+  padding-bottom: 2rem;
+  justify-content: center;
+}
+.site-main .controls {
+  display: flex;
+  justify-content: center;
+}
+.site-main .controls form {
+  display: grid;
+  grid-template-columns: 1fr auto;
   gap: 0.75rem;
-  margin-top: 2rem;
+  width: 100%;
+  max-width: 560px;
 }
-
-#result {
-  margin-top: 3.5rem;
-  display: flex;
-  justify-content: center;
-  position: relative;
-}
-
-.country-card {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-  padding: 1.5rem 2rem;
+.site-main .controls form input[type=search] {
+  padding: 0.75rem 1rem;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
-  background-color: #fafafa;
-  max-width: 520px;
-  width: 100%;
+  font-size: 1rem;
+  background: #ffffff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
-
-.country-card img {
-  width: 80px;
-  height: auto;
-  border-radius: 4px;
+.site-main .controls form input[type=search]:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+  border-color: #2563eb;
 }
-
-.country-card h2 {
-  margin: 0;
-  font-size: 1.2rem;
+.site-main .controls form button[type=button],
+.site-main .controls form button[type=submit] {
+  padding: 0.75rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: #2563eb;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.02s ease;
 }
-
-.country-card p {
-  margin: 0.3rem 0 0;
-  color: #555;
+.site-main .controls form button[type=button]:hover,
+.site-main .controls form button[type=submit]:hover {
+  background: #1d4ed8;
 }
-
-#history {
-  margin-top: 1rem;
+.site-main .controls form button[type=button]:active,
+.site-main .controls form button[type=submit]:active {
+  transform: translateY(1px);
+}
+.site-main .controls form button[type=button]:focus-visible,
+.site-main .controls form button[type=submit]:focus-visible {
+  outline: 2px solid #93c5fd;
+  outline-offset: 2px;
+}
+@media (max-width: 480px) {
+  .site-main .controls form {
+    grid-template-columns: 1fr;
+  }
+}
+.site-main #history {
   display: flex;
   justify-content: center;
 }
-
-.history-list {
+.site-main #history .history-list {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
-  max-width: 520px;
+  width: 100%;
+  max-width: -moz-max-content;
+  max-width: max-content;
 }
-
-.history-item {
-  padding: 0.35rem 0.75rem;
+.site-main #history .history-item {
+  padding: 0.4rem 0.75rem;
   border-radius: 999px;
   border: 1px solid #e5e7eb;
-  background-color: #f4f4f4;
+  background: #fafafa;
   cursor: pointer;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
 }
-
-.history-item:hover {
-  background-color: #eaeaea;
+.site-main #history .history-item:hover {
+  background: #eee;
+}
+.site-main #history .history-item:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+.site-main #result {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.25rem;
+  width: 100%;
+  max-width: 1024px;
+  margin-inline: auto;
+  align-items: stretch;
 }
 
 .result-list {
@@ -85,47 +156,91 @@ header h1 {
   flex-direction: column;
   gap: 0;
   width: 100%;
-  max-width: 520px;
+  max-width: 560px;
+  margin-inline: auto;
   background: #fff;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow:
-    0 10px 15px -3px rgba(0, 0, 0, 0.08),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 .result-item {
-  appearance: none;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
   border: 0;
   background: transparent;
-  padding: 0.75rem 1rem;
+  padding: 0.8rem 1rem;
   width: 100%;
   text-align: left;
   font-size: 0.95rem;
   color: #111827;
   cursor: pointer;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: 0.5rem;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  gap: 0.75rem;
+  transition: background-color 0.12s ease, color 0.12s ease;
 }
-
 .result-item + .result-item {
   border-top: 1px solid #f1f5f9;
 }
-
 .result-item:hover {
-  background-color: #f9fafb;
+  background: #f9fafb;
 }
-
 .result-item.active {
-  background-color: #eef2ff;
+  background: #dbeafe;
   color: #1d4ed8;
 }
-
 .result-item:focus-visible {
   outline: 2px solid #2563eb;
-  outline-offset: -2px;
-  background-color: #eef2ff;
+  outline-offset: 2px;
+  background: #dbeafe;
 }
+
+.country-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background-color: #ffffff;
+  width: 100%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+.country-card img {
+  width: 64px;
+  height: 42px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 6px;
+  flex: 0 0 auto;
+}
+.country-card h2 {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.3;
+}
+.country-card p {
+  margin: 0.25rem 0 0;
+  color: #4b5563;
+  font-size: 0.9rem;
+}
+@media (max-width: 480px) {
+  .country-card img {
+    width: 56px;
+    height: 38px;
+  }
+}
+
+.site-footer {
+  padding: 1.5rem 0 2rem;
+  text-align: center;
+  color: #4b5563;
+  justify-content: center;
+}
+.site-footer small {
+  font-size: 0.9rem;
+}/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,245 @@
+@use "_variables" as *;
+
+@mixin focus-ring($color: $focus-color) {
+  outline: 2px solid $color;
+  outline-offset: 2px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  line-height: 1.5;
+  color: $color-text-main;
+  background: $color-bg-page;
+}
+
+.container {
+  width: min(100% - 2rem, $page-max-width);
+  margin-inline: auto;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; 
+  height: 1px;
+  padding: 0; 
+  margin: -1px;
+  overflow: hidden; 
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.page-grid {
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.site-header,
+.site-main,
+.site-footer { @extend .container; }
+
+.site-header {
+  display: flex;
+  justify-content: center;
+  padding-top: $space-2xl;
+  padding-bottom: $space-lg;
+  justify-content: center;
+
+  h1 {
+    margin: 0;
+    font-size:2rem;
+    letter-spacing: -0.015em;
+  }
+}
+
+.site-main {
+  display: grid;
+  gap: $space-xl;
+  padding-bottom: $space-2xl;
+  justify-content: center;
+
+  .controls {
+    display: flex;
+    justify-content: center;
+
+    form {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: $space-md;
+      width: 100%;
+      max-width: $content-max-width;
+
+      input[type="search"] {
+        padding: $input-padding-y $input-padding-x;
+        border: 1px solid $input-border-color;
+        border-radius: $input-radius;
+        font-size: $input-font-size;
+        background: $input-bg-color;
+        transition: border-color .15s ease, box-shadow .15s ease;
+
+        &:focus-visible {
+          @include focus-ring();
+          border-color: $input-focus-border-color;
+        }
+      }
+
+      button[type="button"],
+      button[type="submit"] {
+        padding: $btn-padding-y $btn-padding-x;
+        border: 1px solid $btn-border-color;
+        border-radius: $btn-radius;
+        background: $btn-bg-color;
+        color: $btn-text-color;
+        font-weight: 600;
+        font-size: $btn-font-size;
+        cursor: pointer;
+        transition: background-color .15s ease, transform .02s ease;
+
+        &:hover { background: $btn-bg-hover-color; }
+        &:active { transform: translateY(1px); }
+        &:focus-visible { @include focus-ring(#93c5fd); }
+      }
+
+      @media (max-width: $breakpoint-sm) {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+
+  #history {
+    display: flex;
+    justify-content: center;
+
+    .history-list {
+      display: flex;
+      gap: $space-sm;
+      flex-wrap: wrap;
+      width: 100%;
+      max-width: max-content;
+    }
+
+    .history-item {
+      padding: .4rem .75rem;
+      border-radius: 999px;
+      border: 1px solid $color-border-default;
+      background: $color-bg-muted;
+      cursor: pointer;
+      font-size: .9rem;
+      transition: background-color .15s ease, border-color .15s ease;
+
+      &:hover { background: #eee; }
+      &:focus-visible { @include focus-ring(); }
+    }
+  }
+
+  #result {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.25rem;
+    width: 100%;
+    max-width: $results-max-width;
+    margin-inline: auto;
+    align-items: stretch;
+  }
+}
+
+.result-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  max-width: $content-max-width;
+  margin-inline: auto;
+  background: #fff;
+  border: 1px solid $color-border-default;
+  border-radius: $radius-md;
+  overflow: hidden;
+  box-shadow: $shadow-md;
+}
+
+.result-item {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: .8rem 1rem;
+  width: 100%;
+  text-align: left;
+  font-size: .95rem;
+  color: $color-text-main;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: $space-md;
+  transition: background-color .12s ease, color .12s ease;
+
+  & + .result-item { border-top: 1px solid #f1f5f9; }
+  &:hover { background: #f9fafb; }
+
+  &.active {
+    background: $color-primary-light;
+    color: $color-primary-hover;
+  }
+
+  &:focus-visible {
+    @include focus-ring($color-primary);
+    background: $color-primary-light;
+  }
+}
+
+.country-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+  border: 1px solid $color-border-default;
+  border-radius: $radius-md;
+  background-color: $color-bg-card;
+  width: 100%;
+  box-shadow: $shadow-sm;
+
+  img {
+    width: 64px;
+    height: 42px;
+    object-fit: cover;
+    border-radius: $radius-sm;
+    flex: 0 0 auto;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.3;
+  }
+
+  p {
+    margin: .25rem 0 0;
+    color: $color-text-muted;
+    font-size: .9rem;
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    img { width: 56px; height: 38px; }
+  }
+}
+
+.site-footer {
+  padding: $space-xl 0 $space-2xl;
+  text-align: center;
+  color: $color-text-muted;
+  justify-content: center;
+
+  small { font-size: .9rem; }
+}
+
