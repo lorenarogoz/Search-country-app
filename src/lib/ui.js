@@ -1,42 +1,61 @@
 
 import { fetchCountriesByName } from './data.js';
 import { renderCountry, renderError, renderLoading, renderHistory, renderFavorites } from './render.js';
-import { addToHistory, getHistory, isFavorite, toggleFavorite, getFavorites, removeFavorite, countryId} from './storage.js';
+import { addToHistory, getHistory, isFavorite, toggleFavorite, getFavorites, removeFavorite, countryId } from './storage.js';
 
 export default class UI {
   constructor(inputEl, searchBtn, resultEl) {
     this.inputEl = inputEl;
     this.searchBtn = searchBtn;
     this.resultEl = resultEl;
+    this.formEl = document.getElementById('country-search-form');
     this.historyEl = document.getElementById('history');
-    this.favoritesEl = document.getElementById('favorites')
+    this.favoritesEl = document.getElementById('favorites');
+    this.loading = false;
   }
 
   bindEvents() {
-    this.searchBtn.addEventListener('click', () => this.search());
+    if (this.formEl) {
+      this.formEl.addEventListener('submit', (e) => {
+        e.preventDefault();
+        this.search();
+      });
+    }
+
+    if (this.searchBtn) {
+      this.searchBtn.addEventListener('click', () => this.search());
+    }
+
     this.inputEl.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') {
         this.search();
       }
     });
+
     this.updateHistory();
     this.updateFavorites();
   }
 
   async search() {
+    if (this.loading) return;
+
     const raw = (this.inputEl.value || '').trim();
     if (raw.length < 3) {
       renderError(this.resultEl, 'Type at least 3 characters.');
       this.clearResultsState();
       return;
     }
+
+    this.loading = true;
+    this.resultEl.setAttribute('aria-busy', 'true');
+    if (this.searchBtn) this.searchBtn.disabled = true;
     renderLoading(this.resultEl);
+
     try {
       const list = await fetchCountriesByName(raw);
-
       this.resultEl.innerHTML = '';
       list.forEach((country) => {
-        const id =countryId(country);
+        const id = countryId(country);
         const fav = isFavorite(id);
         renderCountry(this.resultEl, country, {
           isFav: fav,
@@ -50,11 +69,21 @@ export default class UI {
       });
       addToHistory(raw);
       this.updateHistory();
+
+      const firstCard = this.resultEl.querySelector('.country-card');
+      if (firstCard) {
+        firstCard.setAttribute('tabindex', '-1');
+        firstCard.focus();
+      }
     } catch (err) {
       renderError(
         this.resultEl,
         err instanceof Error ? err.message : 'Something went wrong.'
       );
+    } finally {
+      this.resultEl.setAttribute('aria-busy', 'false');
+      if (this.searchBtn) this.searchBtn.disabled = false;
+      this.loading = false;
     }
   }
 
@@ -89,5 +118,10 @@ export default class UI {
       btn.textContent = shouldBeFav ? '★' : '☆';
     });
   }
-}
 
+  clearResultsState() {
+    this.resultEl.setAttribute('aria-busy', 'false');
+    if (this.searchBtn) this.searchBtn.disabled = false;
+    this.loading = false;
+  }
+}

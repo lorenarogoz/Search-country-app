@@ -15,7 +15,7 @@
       <main id="app" class="site-main">
           <section class="controls" aria-labelledby="country-search-label">
             <h2 id="country-search-label" class="visually-hidden">Search country</h2>
-            <form id="country-search-form" role="search" onsubmit="return false">
+            <form id="country-search-form" role="search">
               <label for="country-input" class="visually-hidden">Country name</label>
               <input
                 id="country-input"
@@ -27,8 +27,9 @@
                 enterkeyhint="search"
                 inputmode="search"
                 aria-controls="result"
+                minlength="3"
               />
-              <button id="search-btn" type="button">Search</button>
+              <button id="search-btn" type="submit">Search</button>
             </form>
           </section>
         <section id="history" aria-label="Search history"></section>

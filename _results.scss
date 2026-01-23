@@ -1,0 +1,31 @@
+@use "_variables" as *;
+@use "_mixin" as *;
+.result-item {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: .8rem 1rem;
+  width: 100%;
+  text-align: left;
+  font-size: .95rem;
+  color: $color-text-main;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: $space-md;
+  transition: background-color .12s ease, color .12s ease;
+
+  & + .result-item { border-top: 1px solid #f1f5f9; }
+  &:hover { background: #f9fafb; }
+
+  &.active {
+    background: $color-primary-light;
+    color: $color-primary-hover;
+  }
+
+  &:focus-visible {
+    @include focus-ring($color-primary);
+    background: $color-primary-light;
+  }
+}
