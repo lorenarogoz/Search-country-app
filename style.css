@@ -200,7 +200,9 @@ body {
 }
 
 .country-card {
-  display: flex;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  justify-items: center;
   align-items: center;
   gap: 1rem;
   padding: 1.25rem;
@@ -209,24 +211,31 @@ body {
   background-color: #ffffff;
   width: 100%;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  height: 200px;
 }
 .country-card img {
-  width: 64px;
-  height: 42px;
+  width: 100px;
+  height: 70px;
   -o-object-fit: cover;
      object-fit: cover;
   border-radius: 6px;
   flex: 0 0 auto;
+  border: 1px solid #979ca0;
+}
+.country-card div {
+  min-width: 0;
 }
 .country-card h2 {
   margin: 0;
   font-size: 1rem;
   line-height: 1.3;
+  text-align: center;
 }
 .country-card p {
   margin: 0.25rem 0 0;
   color: #4b5563;
   font-size: 0.9rem;
+  text-align: center;
 }
 @media (max-width: 480px) {
   .country-card img {
@@ -243,4 +252,106 @@ body {
 }
 .site-footer small {
   font-size: 0.9rem;
+}
+
+.fav-btn {
+  justify-self: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #e5e7eb;
+  background: transparent;
+  color: #4b5563;
+  cursor: pointer;
+  font-size: 1.1rem;
+  line-height: 1;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.fav-btn:hover {
+  background: #fafafa;
+}
+.fav-btn.is-fav {
+  color: #f59e0b;
+  background: #fffbeb;
+  border-color: #fde68a;
+}
+.fav-btn:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+#favorites {
+  width: 100%;
+  max-width: 1024px;
+  margin-inline: auto;
+}
+
+.favorites {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.favorites-title {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.favorites-empty {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #4b5563;
+}
+
+.favorites-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.favorites-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.favorites-item-info {
+  display: grid;
+}
+.favorites-item-info strong {
+  font-size: 0.95rem;
+  line-height: 1.2;
+}
+.favorites-item-info small {
+  font-size: 0.85rem;
+  color: #4b5563;
+}
+
+.favorites-list-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.favorites-remove-btn {
+  justify-self: center;
+  border: 1px solid #e5e7eb;
+  background: #2563eb;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  color: #ffffff;
+  font-weight: 100;
+  font-size: 1rem;
+  width: 70px;
+  display: inline-flex;
+  text-align: center;
+  justify-content: center;
 }/*# sourceMappingURL=style.css.map */
