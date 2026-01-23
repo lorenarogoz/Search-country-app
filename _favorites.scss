@@ -1,0 +1,119 @@
+@use "_variables" as *;
+@use "_mixin" as *;
+#favorites {
+  width: 100%;
+  max-width: $results-max-width;
+  margin-inline: auto;
+}
+
+.favorites {
+  display: grid;
+  gap: $space-sm;
+}
+
+.favorites-title {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.favorites-empty {
+  margin: 0;
+  font-size: .95rem;
+  color: $color-text-muted;
+}
+
+
+.favorites-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: .5rem;
+}
+
+.favorites-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: .6rem .75rem;
+  border: 1px solid $color-border-default;
+  border-radius: $radius-md;
+  background: $color-bg-card;
+}
+
+.favorites-item-info {
+  display: grid;
+
+  strong {
+    font-size: .95rem;
+    line-height: 1.2;
+  }
+
+  small {
+    font-size: .85rem;
+    color: $color-text-muted;
+  }
+}
+
+
+.favorites-list-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.25rem;
+  width: 100%;
+}
+
+
+.favorites-remove-btn {
+  justify-self: center;
+  border: 1px solid $color-border-default;
+  background: $btn-bg-color;
+  padding: $btn-padding-y $btn-padding-x;
+  border-radius: $btn-radius;
+  color: $btn-text-color;
+  font-weight: 100;
+  font-size: $btn-font-size; 
+  width: 70px;
+  display: inline-flex;
+  text-align: center;
+  justify-content: center;
+
+}
+
+.fav-btn {
+  justify-self: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 999px;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid $color-border-default;
+  background: transparent;
+  color: $color-text-muted;
+  cursor: pointer;
+
+  font-size: 1.1rem;
+  line-height: 1;
+
+  transition:
+    background-color .15s ease,
+    color .15s ease,
+    border-color .15s ease;
+
+  &:hover {
+    background: $color-bg-muted;
+  }
+
+  &.is-fav {
+    color: #f59e0b;
+    background: #fffbeb;
+    border-color: #fde68a;
+  }
+
+  &:focus-visible {
+    @include focus-ring();
+  }
+}
